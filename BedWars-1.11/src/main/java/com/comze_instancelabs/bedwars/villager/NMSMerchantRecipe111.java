@@ -11,7 +11,8 @@ public class NMSMerchantRecipe111 {
 	}
 
 	public NMSMerchantRecipe111(ItemStack item1, ItemStack item3) {
-		this(item1, null, item3);
+		// ItemStack.a is EMPTY constant (new ItemStack(null))
+		this(item1, ItemStack.a, item3);
 	}
 
 	public NMSMerchantRecipe111(ItemStack item1, ItemStack item2, ItemStack item3) {

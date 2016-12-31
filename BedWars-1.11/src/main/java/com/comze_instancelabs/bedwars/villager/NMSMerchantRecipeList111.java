@@ -13,10 +13,6 @@ public class NMSMerchantRecipeList111 {
 		this.handle = new MerchantRecipeList();
 	}
 
-	public NMSMerchantRecipeList111(MerchantRecipeList handle) {
-		this.handle = handle;
-	}
-
 	public MerchantRecipeList getHandle() {
 		return this.handle;
 	}
