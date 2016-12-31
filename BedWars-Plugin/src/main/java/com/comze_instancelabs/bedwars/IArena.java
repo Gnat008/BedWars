@@ -264,6 +264,7 @@ public class IArena extends Arena {
 				i.remove();
 			}
 		}
+		this.dropped_items.clear();
 		super.stop();
 	}
     
