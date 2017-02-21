@@ -50,14 +50,15 @@ public class IArenaScoreboard extends ArenaScoreboard {
 				aobjective.put(arena.getInternalName(), ascore.get(arena.getInternalName()).registerNewObjective(arena.getInternalName(), "dummy"));
 			}
 
-			aobjective.get(arena.getInternalName()).setDisplaySlot(DisplaySlot.SIDEBAR);
+			final Objective objective = aobjective.get(arena.getInternalName());
+			objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
-			aobjective.get(arena.getInternalName()).setDisplayName(MinigamesAPI.getAPI().pinstances.get(plugin).getMessagesConfig().scoreboard_title.replaceAll("<arena>", arena.getDisplayName()));
+			objective.setDisplayName(MinigamesAPI.getAPI().pinstances.get(plugin).getMessagesConfig().scoreboard_title.replaceAll("<arena>", arena.getDisplayName()));
 
-			aobjective.get(arena.getInternalName()).getScore(Bukkit.getOfflinePlayer(ChatColor.BLUE + "BLUE")).setScore(arena.blue);
-			aobjective.get(arena.getInternalName()).getScore(Bukkit.getOfflinePlayer(ChatColor.RED + "RED")).setScore(arena.red);
-			aobjective.get(arena.getInternalName()).getScore(Bukkit.getOfflinePlayer(ChatColor.GREEN + "GREEN")).setScore(arena.green);
-			aobjective.get(arena.getInternalName()).getScore(Bukkit.getOfflinePlayer(ChatColor.YELLOW + "YELLOW")).setScore(arena.yellow);
+			get(objective, ChatColor.BLUE + "BLUE").setScore(arena.blue);
+			get(objective, ChatColor.RED + "RED").setScore(arena.red);
+			get(objective, ChatColor.GREEN + "GREEN").setScore(arena.green);
+			get(objective, ChatColor.YELLOW + "YELLOW").setScore(arena.yellow);
 
 			p.setScoreboard(ascore.get(arena.getInternalName()));
 		}
