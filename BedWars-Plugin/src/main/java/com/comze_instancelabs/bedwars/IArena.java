@@ -30,10 +30,12 @@ import org.bukkit.scheduler.BukkitTask;
 
 import com.comze_instancelabs.minigamesapi.Arena;
 import com.comze_instancelabs.minigamesapi.ArenaConfigStrings;
+import com.comze_instancelabs.minigamesapi.ArenaState;
 import com.comze_instancelabs.minigamesapi.ArenaType;
 import com.comze_instancelabs.minigamesapi.MinigamesAPI;
 import com.comze_instancelabs.minigamesapi.PluginInstance;
 import com.comze_instancelabs.minigamesapi.util.Util;
+import com.comze_instancelabs.minigamesapi.util.Validator;
 
 public class IArena extends Arena {
 
@@ -137,6 +139,7 @@ public class IArena extends Arena {
 		} else {
 			c = 0;
 		}
+		this.checkBalancedTeams();
 	}
 
 	public void spectate(String playername, boolean super_) {
@@ -240,6 +243,17 @@ public class IArena extends Arena {
 			}
 		}
 		super.leavePlayer(p_, arg1, arg2);
+		if (this.getArenaState() == ArenaState.STARTING)
+		{
+			this.checkBalancedTeams();
+		}
+		else if (this.getArenaState() == ArenaState.JOIN)
+		{
+			if (this.checkBalancedTeams() && this.getAllPlayers().size() > this.getMinPlayers() - 1)
+			{
+				this.startLobby();
+			}
+		}
 	}
 
 	@Override
@@ -280,5 +294,89 @@ public class IArena extends Arena {
 		// do not remove villagers (those are npc merchants)
         return super.isEntityReset(player, e) && e.getType() != EntityType.VILLAGER;
     }
+	
+	@Override
+	protected void onLobbyCountdownComplete()
+    {
+		if (checkBalancedTeams())
+		{
+			super.onLobbyCountdownComplete();
+		}
+		else
+		{
+			this.abortStarting();
+		}
+    }
+
+	public boolean checkBalancedTeams() {
+		// check for only one team
+		if (this.red == 0 && this.blue == 0 && this.green == 0 && this.yellow > 1)
+		{
+			sendOnlyOneTeamMsg(ChatColor.YELLOW + "YELLOW");
+			return false;
+		}
+		if (this.red > 1 && this.blue == 0 && this.green == 0 && this.yellow == 0)
+		{
+			sendOnlyOneTeamMsg(ChatColor.RED + "RED");
+			return false;
+		}
+		if (this.red == 0 && this.blue > 1 && this.green == 0 && this.yellow == 0)
+		{
+			sendOnlyOneTeamMsg(ChatColor.BLUE + "BLUE");
+			return false;
+		}
+		if (this.red == 0 && this.blue == 0 && this.green > 1 && this.yellow == 0)
+		{
+			sendOnlyOneTeamMsg(ChatColor.GREEN + "GREEN");
+			return false;
+		}
+		
+		// check for misbalanced teams
+		int max = Math.max(Math.max(this.red, this.blue), Math.max(this.yellow, this.green));
+		if (this.red > 0 && this.red < max - 1)
+		{
+			sendMisbalancedTeamMsg(ChatColor.RED + "RED");
+			return false;
+		}
+		if (this.blue > 0 && this.blue < max - 1)
+		{
+			sendMisbalancedTeamMsg(ChatColor.BLUE + "BLUE");
+			return false;
+		}
+		if (this.yellow > 0 && this.yellow < max - 1)
+		{
+			sendMisbalancedTeamMsg(ChatColor.YELLOW + "YELLOW");
+			return false;
+		}
+		if (this.green > 0 && this.green < max - 1)
+		{
+			sendMisbalancedTeamMsg(ChatColor.GREEN + "GREEN");
+			return false;
+		}
+		
+		return true;
+	}
+
+	private void sendOnlyOneTeamMsg(final String team) {
+		for (final String p_2 : this.getAllPlayers())
+		{
+		    if (Validator.isPlayerOnline(p_2))
+		    {
+		        final Player p2 = Bukkit.getPlayer(p_2);
+		        p2.sendMessage("Unbalanced teams! All players selected only one team: " + team);
+		    }
+		}
+	}
+
+	private void sendMisbalancedTeamMsg(final String team) {
+		for (final String p_2 : this.getAllPlayers())
+		{
+		    if (Validator.isPlayerOnline(p_2))
+		    {
+		        final Player p2 = Bukkit.getPlayer(p_2);
+		        p2.sendMessage("Unbalanced teams! A team needs more players: " + team);
+		    }
+		}
+	}
 
 }

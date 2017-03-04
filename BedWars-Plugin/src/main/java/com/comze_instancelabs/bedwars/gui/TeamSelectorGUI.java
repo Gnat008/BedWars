@@ -24,6 +24,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.comze_instancelabs.bedwars.IArena;
 import com.comze_instancelabs.bedwars.Main;
+import com.comze_instancelabs.minigamesapi.ArenaState;
 import com.comze_instancelabs.minigamesapi.PluginInstance;
 import com.comze_instancelabs.minigamesapi.util.IconMenu;
 import com.comze_instancelabs.minigamesapi.util.Util;
@@ -60,6 +61,10 @@ public class TeamSelectorGUI {
 									plugin.pteam.put(p.getName(), ChatColor.stripColor(d.toLowerCase()));
 									updateTeamCount(playername, a, +1);
 									p.sendMessage(ChatColor.GREEN + "Successfully set team: " + d);
+									if (a.checkBalancedTeams() && a.getArenaState() == ArenaState.JOIN && a.getAllPlayers().size() > a.getMinPlayers() - 1)
+									{
+										a.startLobby();
+									}
 									plugin.scoreboard.updateScoreboard(a);
 								} else {
 									p.sendMessage(ChatColor.RED + "That team is not enabled on this map: " + d);
