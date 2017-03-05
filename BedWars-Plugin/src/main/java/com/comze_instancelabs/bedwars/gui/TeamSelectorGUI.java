@@ -45,7 +45,7 @@ public class TeamSelectorGUI {
 		if (lasticonm.containsKey(playername)) {
 			iconm = lasticonm.get(playername);
 		} else {
-			iconm = new IconMenu("Team", 9, new IconMenu.OptionClickEventHandler() {
+			iconm = new IconMenu(this.plugin.msg().teamselector_title, 9, new IconMenu.OptionClickEventHandler() {
 				@Override
 				public void onOptionClick(IconMenu.OptionClickEvent event) {
 					if (event.getPlayer().getName().equalsIgnoreCase(playername)) {
@@ -54,34 +54,43 @@ public class TeamSelectorGUI {
 								String d = event.getName();
 								Player p = event.getPlayer();
 								IArena a = (IArena) pli.global_players.get(playername);
-								if (Util.isComponentForArenaValid(plugin, a.getInternalName(), "spawns.spawn" + ChatColor.stripColor(d.toLowerCase()))) {
+								final String team = getTeamFromSelector(d);
+								if (Util.isComponentForArenaValid(plugin, a.getInternalName(), "spawns.spawn" + team)) {
 									if (plugin.pteam.containsKey(p.getName())) {
 										updateTeamCount(playername, a, -1);
 									}
-									plugin.pteam.put(p.getName(), ChatColor.stripColor(d.toLowerCase()));
+									plugin.pteam.put(p.getName(), team);
 									updateTeamCount(playername, a, +1);
-									p.sendMessage(ChatColor.GREEN + "Successfully set team: " + d);
+									p.sendMessage(plugin.msg().teamselector_success.replace("<team>", plugin.msg().getTextFromTeam(team)));
 									if (a.checkBalancedTeams() && a.getArenaState() == ArenaState.JOIN && a.getAllPlayers().size() > a.getMinPlayers() - 1)
 									{
 										a.startLobby();
 									}
 									plugin.scoreboard.updateScoreboard(a);
 								} else {
-									p.sendMessage(ChatColor.RED + "That team is not enabled on this map: " + d);
+									p.sendMessage(plugin.msg().teamselector_disabled.replace("<team>", plugin.msg().getTextFromTeam(team)));
 								}
 							}
 						}
 					}
 					event.setWillClose(true);
 				}
+
+				private String getTeamFromSelector(String d) {
+					if (d.equals(plugin.msg().teamselector_titleblue)) return "blue";
+					if (d.equals(plugin.msg().teamselector_titlegreen)) return "green";
+					if (d.equals(plugin.msg().teamselector_titleyellow)) return "yellow";
+					if (d.equals(plugin.msg().teamselector_titlered)) return "red";
+					return null;
+				}
 			}, plugin);
 
 		}
 
-		iconm.setOption(1, new ItemStack(Material.WOOL, 1, (byte) 14), ChatColor.RED + "RED", "Select the red team.");
-		iconm.setOption(3, new ItemStack(Material.WOOL, 1, (byte) 11), ChatColor.BLUE + "BLUE", "Select the blue team.");
-		iconm.setOption(5, new ItemStack(Material.WOOL, 1, (byte) 5), ChatColor.GREEN + "GREEN", "Select the green team.");
-		iconm.setOption(7, new ItemStack(Material.WOOL, 1, (byte) 4), ChatColor.YELLOW + "YELLOW", "Select the yellow team.");
+		iconm.setOption(1, new ItemStack(Material.WOOL, 1, (byte) 14), plugin.msg().teamselector_titlered, plugin.msg().teamselector_selectred);
+		iconm.setOption(3, new ItemStack(Material.WOOL, 1, (byte) 11), plugin.msg().teamselector_titleblue, plugin.msg().teamselector_selectblue);
+		iconm.setOption(5, new ItemStack(Material.WOOL, 1, (byte) 5), plugin.msg().teamselector_titlegreen, plugin.msg().teamselector_selectgreen);
+		iconm.setOption(7, new ItemStack(Material.WOOL, 1, (byte) 4), plugin.msg().teamselector_titleyellow, plugin.msg().teamselector_selectyellow);
 
 		iconm.open(Bukkit.getPlayerExact(playername));
 		lasticonm.put(playername, iconm);

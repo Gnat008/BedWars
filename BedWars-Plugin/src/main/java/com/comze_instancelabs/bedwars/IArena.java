@@ -94,7 +94,7 @@ public class IArena extends Arena {
 		if (c == 0) {
 			if (Util.isComponentForArenaValid(m, this.getName(), "spawns.spawnred")) {
 				m.pteam.put(playername, "red");
-				Bukkit.getPlayer(playername).sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "RED Team");
+				Bukkit.getPlayer(playername).sendMessage(m.msg().teamselector_success.replace("<team>", m.msg().RED));
 				red++;
 			} else {
 				c++;
@@ -104,7 +104,7 @@ public class IArena extends Arena {
 		} else if (c == 1) {
 			if (Util.isComponentForArenaValid(m, this.getName(), "spawns.spawngreen")) {
 				m.pteam.put(playername, "green");
-				Bukkit.getPlayer(playername).sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "GREEN Team");
+				Bukkit.getPlayer(playername).sendMessage(m.msg().teamselector_success.replace("<team>", m.msg().GREEN));
 				green++;
 			} else {
 				c++;
@@ -113,7 +113,7 @@ public class IArena extends Arena {
 		} else if (c == 2) {
 			if (Util.isComponentForArenaValid(m, this.getName(), "spawns.spawnblue")) {
 				m.pteam.put(playername, "blue");
-				Bukkit.getPlayer(playername).sendMessage(ChatColor.BLUE + "" + ChatColor.BOLD + "BLUE Team");
+				Bukkit.getPlayer(playername).sendMessage(m.msg().teamselector_success.replace("<team>", m.msg().BLUE));
 				blue++;
 			} else {
 				c++;
@@ -122,7 +122,7 @@ public class IArena extends Arena {
 		} else if (c == 3) {
 			if (Util.isComponentForArenaValid(m, this.getName(), "spawns.spawnyellow")) {
 				m.pteam.put(playername, "yellow");
-				Bukkit.getPlayer(playername).sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "YELLOW Team");
+				Bukkit.getPlayer(playername).sendMessage(m.msg().teamselector_success.replace("<team>", m.msg().YELLOW));
 				yellow++;
 			} else {
 				tries_temp++;
@@ -312,22 +312,22 @@ public class IArena extends Arena {
 		// check for only one team
 		if (this.red == 0 && this.blue == 0 && this.green == 0 && this.yellow > 1)
 		{
-			sendOnlyOneTeamMsg(ChatColor.YELLOW + "YELLOW");
+			sendOnlyOneTeamMsg("yellow");
 			return false;
 		}
 		if (this.red > 1 && this.blue == 0 && this.green == 0 && this.yellow == 0)
 		{
-			sendOnlyOneTeamMsg(ChatColor.RED + "RED");
+			sendOnlyOneTeamMsg("red");
 			return false;
 		}
 		if (this.red == 0 && this.blue > 1 && this.green == 0 && this.yellow == 0)
 		{
-			sendOnlyOneTeamMsg(ChatColor.BLUE + "BLUE");
+			sendOnlyOneTeamMsg("blue");
 			return false;
 		}
 		if (this.red == 0 && this.blue == 0 && this.green > 1 && this.yellow == 0)
 		{
-			sendOnlyOneTeamMsg(ChatColor.GREEN + "GREEN");
+			sendOnlyOneTeamMsg("green");
 			return false;
 		}
 		
@@ -335,22 +335,22 @@ public class IArena extends Arena {
 		int max = Math.max(Math.max(this.red, this.blue), Math.max(this.yellow, this.green));
 		if (this.red > 0 && this.red < max - 1)
 		{
-			sendMisbalancedTeamMsg(ChatColor.RED + "RED");
+			sendMisbalancedTeamMsg("red");
 			return false;
 		}
 		if (this.blue > 0 && this.blue < max - 1)
 		{
-			sendMisbalancedTeamMsg(ChatColor.BLUE + "BLUE");
+			sendMisbalancedTeamMsg("blue");
 			return false;
 		}
 		if (this.yellow > 0 && this.yellow < max - 1)
 		{
-			sendMisbalancedTeamMsg(ChatColor.YELLOW + "YELLOW");
+			sendMisbalancedTeamMsg("yellow");
 			return false;
 		}
 		if (this.green > 0 && this.green < max - 1)
 		{
-			sendMisbalancedTeamMsg(ChatColor.GREEN + "GREEN");
+			sendMisbalancedTeamMsg("green");
 			return false;
 		}
 		
@@ -363,7 +363,7 @@ public class IArena extends Arena {
 		    if (Validator.isPlayerOnline(p_2))
 		    {
 		        final Player p2 = Bukkit.getPlayer(p_2);
-		        p2.sendMessage("Unbalanced teams! All players selected only one team: " + team);
+		        p2.sendMessage(m.msg().unbalanced_teams_onlyone.replace("<team>", m.msg().getTextFromTeam(team)));
 		    }
 		}
 	}
@@ -374,7 +374,7 @@ public class IArena extends Arena {
 		    if (Validator.isPlayerOnline(p_2))
 		    {
 		        final Player p2 = Bukkit.getPlayer(p_2);
-		        p2.sendMessage("Unbalanced teams! A team needs more players: " + team);
+		        p2.sendMessage(m.msg().unbalanced_teams_moreplayers.replace("<team>", m.msg().getTextFromTeam(team)));
 		    }
 		}
 	}

@@ -87,7 +87,6 @@ import com.comze_instancelabs.minigamesapi.MinigamesAPI;
 import com.comze_instancelabs.minigamesapi.PluginInstance;
 import com.comze_instancelabs.minigamesapi.config.ArenasConfig;
 import com.comze_instancelabs.minigamesapi.config.DefaultConfig;
-import com.comze_instancelabs.minigamesapi.config.MessagesConfig;
 import com.comze_instancelabs.minigamesapi.config.StatsConfig;
 import com.comze_instancelabs.minigamesapi.util.Cuboid;
 import com.comze_instancelabs.minigamesapi.util.Util;
@@ -127,7 +126,7 @@ public class Main extends JavaPlugin implements Listener {
 
 	public void onEnable() {
 		m = this;
-		api = MinigamesAPI.getAPI().setupAPI(this, "bedwars", IArena.class, new ArenasConfig(this), new MessagesConfig(this), new IClassesConfig(this), new StatsConfig(this, false), new DefaultConfig(this, false), true);
+		api = MinigamesAPI.getAPI().setupAPI(this, "bedwars", IArena.class, new ArenasConfig(this), new IMessagesConfig(this), new IClassesConfig(this), new StatsConfig(this, false), new DefaultConfig(this, false), true);
 		PluginInstance pinstance = api.pinstances.get(this);
 		pinstance.addLoadedArenas(loadArenas(this, pinstance.getArenasConfig()));
 		Bukkit.getPluginManager().registerEvents(this, this);
@@ -183,7 +182,6 @@ public class Main extends JavaPlugin implements Listener {
 		loadTrades(config, "specialsgui.trades.", SpecialsMerchant);
 
 		// Bed message
-		pli.getMessagesConfig().getConfig().addDefault("messages.bed_destroyed", "&cTeam &4<team>&c's bed was destroyed!");
 		pli.getMessagesConfig().getConfig().options().copyDefaults(true);
 		pli.getMessagesConfig().saveConfig();
 
@@ -686,7 +684,7 @@ public class Main extends JavaPlugin implements Listener {
 					event.getBlock().setType(Material.AIR);
 					for (String p_ : a.getAllPlayers()) {
 						if (Validator.isPlayerOnline(p_)) {
-							Bukkit.getPlayer(p_).sendMessage(ChatColor.translateAlternateColorCodes('&', pli.getMessagesConfig().getConfig().getString("messages.bed_destroyed").replaceAll("<team>", Character.toUpperCase(team.charAt(0)) + team.substring(1))));
+							Bukkit.getPlayer(p_).sendMessage(this.msg().bed_destroyed.replaceAll("<team>", msg().getTextFromTeam(team)));
 						}
 					}
 					return;
@@ -736,7 +734,7 @@ public class Main extends JavaPlugin implements Listener {
 				return;
 			}
 			String team = m.pteam.get(p.getName());
-			String msg = String.format(ChatColor.GRAY + "[" + ChatColor.valueOf(team.toUpperCase()) + team + ChatColor.GRAY + "] " + event.getFormat(), p.getName(), event.getMessage());
+			String msg = String.format(ChatColor.GRAY + "[" + msg().getTextFromTeam(team) + ChatColor.GRAY + "] " + event.getFormat(), p.getName(), event.getMessage());
 			for (Player receiver : event.getRecipients()) {
 				if (pli.global_players.containsKey(receiver.getName())) {
 					if (pli.global_players.get(receiver.getName()) == pli.global_players.get(p.getName())) {
@@ -783,6 +781,11 @@ public class Main extends JavaPlugin implements Listener {
 			ret = 13;
 		}
 		return ret;
+	}
+	
+	public IMessagesConfig msg()
+	{
+		return (IMessagesConfig) this.pli.getMessagesConfig();
 	}
 
 }

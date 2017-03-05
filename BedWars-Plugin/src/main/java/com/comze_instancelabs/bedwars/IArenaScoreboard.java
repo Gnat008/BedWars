@@ -34,9 +34,9 @@ public class IArenaScoreboard extends ArenaScoreboard {
 	HashMap<String, Scoreboard> ascore = new HashMap<String, Scoreboard>();
 	HashMap<String, Objective> aobjective = new HashMap<String, Objective>();
 
-	JavaPlugin plugin = null;
+	Main plugin = null;
 
-	public IArenaScoreboard(JavaPlugin plugin) {
+	public IArenaScoreboard(Main plugin) {
 		this.plugin = plugin;
 	}
 
@@ -55,10 +55,10 @@ public class IArenaScoreboard extends ArenaScoreboard {
 
 			objective.setDisplayName(MinigamesAPI.getAPI().pinstances.get(plugin).getMessagesConfig().scoreboard_title.replaceAll("<arena>", arena.getDisplayName()));
 
-			get(objective, ChatColor.BLUE + "BLUE").setScore(arena.blue);
-			get(objective, ChatColor.RED + "RED").setScore(arena.red);
-			get(objective, ChatColor.GREEN + "GREEN").setScore(arena.green);
-			get(objective, ChatColor.YELLOW + "YELLOW").setScore(arena.yellow);
+			get(objective, plugin.msg().BLUE).setScore(arena.blue);
+			get(objective, plugin.msg().RED).setScore(arena.red);
+			get(objective, plugin.msg().GREEN).setScore(arena.green);
+			get(objective, plugin.msg().YELLOW).setScore(arena.yellow);
 
 			p.setScoreboard(ascore.get(arena.getInternalName()));
 		}
