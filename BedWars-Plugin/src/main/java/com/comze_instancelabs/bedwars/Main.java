@@ -391,15 +391,18 @@ public class Main extends JavaPlugin implements Listener {
 
 	@EventHandler
 	public void onEntityInteract(PlayerInteractEntityEvent event) {
-		final Player p = event.getPlayer();
-		if (pli.global_players.containsKey(p.getName())) {
-			if (event.getRightClicked().getType() == EntityType.VILLAGER) {
-				Bukkit.getScheduler().runTaskLater(this, new Runnable() {
-					public void run() {
-						maingui.openGUI((Villager) event.getRightClicked(), p.getName());
-					}
-				}, 1L);
-				event.setCancelled(true);
+		if (gui.getConfig().getBoolean("core.enabled"))
+		{
+			final Player p = event.getPlayer();
+			if (pli.global_players.containsKey(p.getName())) {
+				if (event.getRightClicked().getType() == EntityType.VILLAGER) {
+					Bukkit.getScheduler().runTaskLater(this, new Runnable() {
+						public void run() {
+							maingui.openGUI((Villager) event.getRightClicked(), p.getName());
+						}
+					}, 1L);
+					event.setCancelled(true);
+				}
 			}
 		}
 	}

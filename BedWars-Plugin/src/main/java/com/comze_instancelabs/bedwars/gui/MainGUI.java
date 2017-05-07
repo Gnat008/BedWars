@@ -82,7 +82,7 @@ public class MainGUI {
 		lasticonm.put(p, iconm);
 	}
 
-	public void loadCategoryItemsLater() {
+	private void loadCategoryItemsLater() {
 		Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
 			public void run() {
 				FileConfiguration config = plugin.gui.getConfig();
@@ -96,7 +96,7 @@ public class MainGUI {
 		}, 20L);
 	}
 
-	public void openCategory(Villager villager, final Player p, final String category) {
+	protected void openCategory(Villager villager, final Player p, final String category) {
 		Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
 			public void run() {
 				if (category.equalsIgnoreCase("blocks")) {

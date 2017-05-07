@@ -31,6 +31,8 @@ public class GUIConfig {
 	public GUIConfig(JavaPlugin plugin) {
 		this.plugin = plugin;
 		this.getConfig().options().header("All Gui options:");
+		
+		this.getConfig().addDefault("core.enabled", true);
 
 		this.getConfig().addDefault("maingui.category_items.Blocks.items", "24*1");
 		this.getConfig().addDefault("maingui.category_items.Armor.items", "303*1");
