@@ -1,4 +1,4 @@
-BedWars [![Build Status](http://www.minigameslib.de/build.php?app=BedWars&major=1)](http://www.minigameslib.de/buildref.php?app=BedWars&major=1)
+BedWars [![Build Status](http://www.minigameslib.de/build.png?app=BedWars&major=1)](http://www.minigameslib.de/buildref.php?app=BedWars&major=1)
 =======
 
 Popular BedWars game for spigot-minecraft using [MinigamesAPI](https://github.com/MysticCity/MinigamesAPI).
