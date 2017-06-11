@@ -26,6 +26,7 @@
 				<module>BedWars-1.9.4</module>
 				<module>BedWars-1.10</module>
 				<module>BedWars-1.11</module>
+				<module>BedWars-1.12</module>
 				<module>BedWars-Plugin</module>
 			</modules>
 

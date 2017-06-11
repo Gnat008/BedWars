@@ -15,7 +15,6 @@
 package com.comze_instancelabs.bedwars.sheep;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.logging.Level;
 
 import org.bukkit.Location;
@@ -24,6 +23,7 @@ import org.bukkit.entity.Sheep;
 import org.bukkit.event.entity.EntityTargetEvent;
 
 import com.comze_instancelabs.minigamesapi.MinigamesAPI;
+import com.google.common.collect.Sets;
 
 import net.minecraft.server.v1_10_R1.Entity;
 import net.minecraft.server.v1_10_R1.EntityLiving;
@@ -41,7 +41,7 @@ public class Sheeep110 extends EntitySheep implements Sheeep {
 		try {
 			Field b = this.goalSelector.getClass().getDeclaredField("b");
 			b.setAccessible(true);
-			b.set(this.goalSelector, new ArrayList());
+			b.set(this.goalSelector, Sets.newLinkedHashSet());
 			this.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(128D);
 			this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.37D);
 		} catch (Exception e) {

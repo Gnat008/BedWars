@@ -25,15 +25,15 @@ import org.bukkit.event.entity.EntityTargetEvent;
 import com.comze_instancelabs.minigamesapi.MinigamesAPI;
 import com.google.common.collect.Sets;
 
-import net.minecraft.server.v1_11_R1.Entity;
-import net.minecraft.server.v1_11_R1.EntityLiving;
-import net.minecraft.server.v1_11_R1.EntitySheep;
-import net.minecraft.server.v1_11_R1.GenericAttributes;
-import net.minecraft.server.v1_11_R1.World;
+import net.minecraft.server.v1_12_R1.Entity;
+import net.minecraft.server.v1_12_R1.EntityLiving;
+import net.minecraft.server.v1_12_R1.EntitySheep;
+import net.minecraft.server.v1_12_R1.GenericAttributes;
+import net.minecraft.server.v1_12_R1.World;
 
-public class Sheeep111 extends EntitySheep implements Sheeep {
+public class Sheeep112 extends EntitySheep implements Sheeep {
 
-	public Sheeep111(World world, Entity target) {
+	public Sheeep112(World world, Entity target) {
 		super(world);
 		this.locX = target.locX;
 		this.locY = target.locY;
@@ -47,7 +47,7 @@ public class Sheeep111 extends EntitySheep implements Sheeep {
 		} catch (Exception e) {
 			MinigamesAPI.getAPI().getLogger().log(Level.WARNING, "exception", e);
 		}
-		this.goalSelector.a(0, new PathfinderGoalMeleeAttack111(this, /*EntityHuman.class,*/ 1D, false));
+		this.goalSelector.a(0, new PathfinderGoalMeleeAttack112(this, /*EntityHuman.class,*/ 1D, false));
 		// this.goalSelector.a(0, new PathfinderGoalFollowParent(this, 1.1D));
 		this.setGoalTarget((EntityLiving) target, EntityTargetEvent.TargetReason.OWNER_ATTACKED_TARGET, false);
 		((Sheep) this.getBukkitEntity()).setTarget((LivingEntity) target.getBukkitEntity());
