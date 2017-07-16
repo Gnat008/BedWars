@@ -85,6 +85,7 @@ import com.comze_instancelabs.minigamesapi.ArenaConfigStrings;
 import com.comze_instancelabs.minigamesapi.ArenaSetup;
 import com.comze_instancelabs.minigamesapi.ArenaState;
 import com.comze_instancelabs.minigamesapi.ArenaType;
+import com.comze_instancelabs.minigamesapi.MinecraftVersionsType;
 import com.comze_instancelabs.minigamesapi.MinigamesAPI;
 import com.comze_instancelabs.minigamesapi.PluginInstance;
 import com.comze_instancelabs.minigamesapi.config.ArenasConfig;
@@ -343,6 +344,24 @@ public class Main extends JavaPlugin implements Listener {
 		ItemMeta itemmeta = item.getItemMeta();
 		itemmeta.setDisplayName("bwbeds:" + team + "#" + arena);
 		item.setItemMeta(itemmeta);
+		if (MinigamesAPI.SERVER_VERSION.isAtLeast(MinecraftVersionsType.V1_12))
+		{
+			switch (team)
+			{
+			case "red":
+				item.setDurability((short) 14);
+				break;
+			case "blue":
+				item.setDurability((short) 11);
+				break;
+			case "green":
+				item.setDurability((short) 13);
+				break;
+			case "yellow":
+				item.setDurability((short) 4);
+				break;
+			}
+		}
 		return item;
 	}
 
