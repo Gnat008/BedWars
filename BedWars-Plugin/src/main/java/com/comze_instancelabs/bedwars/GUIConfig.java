@@ -17,6 +17,7 @@ package com.comze_instancelabs.bedwars;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -123,7 +124,7 @@ public class GUIConfig {
 
 		InputStream defConfigStream = plugin.getResource("gui.yml");
 		if (defConfigStream != null) {
-			YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
+			YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defConfigStream));
 			arenaConfig.setDefaults(defConfig);
 		}
 	}
