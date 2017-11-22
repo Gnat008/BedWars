@@ -14,10 +14,17 @@
 */
 package com.comze_instancelabs.bedwars;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-
+import com.comze_instancelabs.bedwars.gui.MainGUI;
+import com.comze_instancelabs.bedwars.gui.TeamSelectorGUI;
+import com.comze_instancelabs.bedwars.sheep.*;
+import com.comze_instancelabs.bedwars.villager.*;
+import com.comze_instancelabs.minigamesapi.*;
+import com.comze_instancelabs.minigamesapi.config.ArenasConfig;
+import com.comze_instancelabs.minigamesapi.config.DefaultConfig;
+import com.comze_instancelabs.minigamesapi.config.StatsConfig;
+import com.comze_instancelabs.minigamesapi.util.Cuboid;
+import com.comze_instancelabs.minigamesapi.util.Util;
+import com.comze_instancelabs.minigamesapi.util.Validator;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -25,11 +32,7 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Villager;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -40,60 +43,15 @@ import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType.SlotType;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerBedEnterEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
-import com.comze_instancelabs.bedwars.gui.MainGUI;
-import com.comze_instancelabs.bedwars.gui.TeamSelectorGUI;
-import com.comze_instancelabs.bedwars.sheep.Register;
-import com.comze_instancelabs.bedwars.sheep.Register110;
-import com.comze_instancelabs.bedwars.sheep.Register111;
-import com.comze_instancelabs.bedwars.sheep.Register112;
-import com.comze_instancelabs.bedwars.sheep.Register1710;
-import com.comze_instancelabs.bedwars.sheep.Register172;
-import com.comze_instancelabs.bedwars.sheep.Register175;
-import com.comze_instancelabs.bedwars.sheep.Register178;
-import com.comze_instancelabs.bedwars.sheep.Register18;
-import com.comze_instancelabs.bedwars.sheep.Register185;
-import com.comze_instancelabs.bedwars.sheep.Register188;
-import com.comze_instancelabs.bedwars.sheep.Register19;
-import com.comze_instancelabs.bedwars.sheep.Register194;
-import com.comze_instancelabs.bedwars.sheep.Sheeep;
-import com.comze_instancelabs.bedwars.villager.Merchant;
-import com.comze_instancelabs.bedwars.villager.Merchant110;
-import com.comze_instancelabs.bedwars.villager.Merchant111;
-import com.comze_instancelabs.bedwars.villager.Merchant112;
-import com.comze_instancelabs.bedwars.villager.Merchant1710;
-import com.comze_instancelabs.bedwars.villager.Merchant172;
-import com.comze_instancelabs.bedwars.villager.Merchant175;
-import com.comze_instancelabs.bedwars.villager.Merchant178;
-import com.comze_instancelabs.bedwars.villager.Merchant18;
-import com.comze_instancelabs.bedwars.villager.Merchant185;
-import com.comze_instancelabs.bedwars.villager.Merchant188;
-import com.comze_instancelabs.bedwars.villager.Merchant19;
-import com.comze_instancelabs.bedwars.villager.Merchant194;
-import com.comze_instancelabs.minigamesapi.Arena;
-import com.comze_instancelabs.minigamesapi.ArenaConfigStrings;
-import com.comze_instancelabs.minigamesapi.ArenaSetup;
-import com.comze_instancelabs.minigamesapi.ArenaState;
-import com.comze_instancelabs.minigamesapi.ArenaType;
-import com.comze_instancelabs.minigamesapi.MinecraftVersionsType;
-import com.comze_instancelabs.minigamesapi.MinigamesAPI;
-import com.comze_instancelabs.minigamesapi.PluginInstance;
-import com.comze_instancelabs.minigamesapi.config.ArenasConfig;
-import com.comze_instancelabs.minigamesapi.config.DefaultConfig;
-import com.comze_instancelabs.minigamesapi.config.StatsConfig;
-import com.comze_instancelabs.minigamesapi.util.Cuboid;
-import com.comze_instancelabs.minigamesapi.util.Util;
-import com.comze_instancelabs.minigamesapi.util.Validator;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Main extends JavaPlugin implements Listener {
 
@@ -193,47 +151,9 @@ public class Main extends JavaPlugin implements Listener {
 		case Unknown:
 		default:
 			break;
-		case V1_10:
-		case V1_10_R1:
-			reg = new Register110();
-			break;
-		case V1_11:
-		case V1_11_R1:
-			reg = new Register111();
-			break;
 		case V1_12:
 		case V1_12_R1:
 			reg = new Register112();
-			break;
-		case V1_7:
-		case V1_7_R1:
-			reg = new Register172();
-			break;
-		case V1_7_R2:
-			reg = new Register175();
-			break;
-		case V1_7_R3:
-			reg = new Register178();
-			break;
-		case V1_7_R4:
-			reg = new Register1710();
-			break;
-		case V1_8:
-		case V1_8_R1:
-			reg = new Register18();
-			break;
-		case V1_8_R2:
-			reg = new Register185();
-			break;
-		case V1_8_R3:
-			reg = new Register188();
-			break;
-		case V1_9:
-		case V1_9_R1:
-			reg = new Register19();
-			break;
-		case V1_9_R2:
-			reg = new Register194();
 			break;
 		}
 		reg.registerEntities();
@@ -249,33 +169,6 @@ public class Main extends JavaPlugin implements Listener {
 		case V1_12:
 		case V1_12_R1:
 			return new Merchant112(string);
-		case V1_11:
-		case V1_11_R1:
-			return new Merchant111(string);
-		case V1_10:
-		case V1_10_R1:
-			return new Merchant110(string);
-		case V1_7:
-		case V1_7_R1:
-			return new Merchant172(string);
-		case V1_7_R2:
-			return new Merchant175(string);
-		case V1_7_R3:
-			return new Merchant178(string);
-		case V1_7_R4:
-			return new Merchant1710(string);
-		case V1_8:
-		case V1_8_R1:
-			return new Merchant18(string);
-		case V1_8_R2:
-			return new Merchant185(string);
-		case V1_8_R3:
-			return new Merchant188(string);
-		case V1_9:
-		case V1_9_R1:
-			return new Merchant19(string);
-		case V1_9_R2:
-			return new Merchant194(string);
 		}
 		return null;
 	}
@@ -394,12 +287,7 @@ public class Main extends JavaPlugin implements Listener {
 					}
 				}
 			}
-		} else if (event.getBlock().getType() == Material.WOOL) {
-			if (pli.global_players.containsKey(event.getPlayer().getName())) {
-				event.setCancelled(true);
-			}
-		}
-		else {
+		} else {
 			if (pli.global_players.containsKey(event.getPlayer().getName())) {
 				final Arena a = this.pli.global_players.get(event.getPlayer().getName());
 				if (a.getArenaState() == ArenaState.INGAME)
