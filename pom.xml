@@ -15,19 +15,27 @@
 	</parent>
       		<modules>
 				<module>BedWars-API</module>
-				<module>BedWars-1.7.2</module>
-				<module>BedWars-1.7.5</module>
-				<module>BedWars-1.7.9</module>
-				<module>BedWars-1.7.10</module>
-				<module>BedWars-1.8</module>
-				<module>BedWars-1.8.5</module>
-				<module>BedWars-1.8.8</module>
-				<module>BedWars-1.9</module>
-				<module>BedWars-1.9.4</module>
-				<module>BedWars-1.10</module>
-				<module>BedWars-1.11</module>
 				<module>BedWars-1.12</module>
 				<module>BedWars-Plugin</module>
 			</modules>
+
+	<repositories>
+		<repository>
+			<id>MinigamesAPI-Repo</id>
+			<name>MinigamesAPI Repository</name>
+			<url>http://nexus.xworlds.eu/nexus/content/groups/mce/</url>
+		</repository>
+	</repositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.github.MCE-Plugins</groupId>
+			<artifactId>MinigamesLib</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.bukkit</groupId>
+			<artifactId>bukkit</artifactId>
+		</dependency>
+	</dependencies>
 
 </project>
