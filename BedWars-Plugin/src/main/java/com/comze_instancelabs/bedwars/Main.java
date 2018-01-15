@@ -608,7 +608,16 @@ public class Main extends JavaPlugin implements Listener {
 					}
 					return;
 				}
-				if (event.getBlock().getType() != Material.IRON_BLOCK && event.getBlock().getType() != Material.ENDER_CHEST && event.getBlock().getType() != Material.TNT && event.getBlock().getType() != Material.SANDSTONE && event.getBlock().getType() != Material.GLOWSTONE && event.getBlock().getType() != Material.ENDER_STONE && event.getBlock().getType() != Material.GLASS && event.getBlock().getType() != Material.LADDER && event.getBlock().getType() != Material.CHEST) {
+				if (event.getBlock().getType() != Material.IRON_BLOCK &&
+						event.getBlock().getType() != Material.ENDER_CHEST &&
+						event.getBlock().getType() != Material.TNT &&
+						event.getBlock().getType() != Material.SANDSTONE &&
+						event.getBlock().getType() != Material.GLOWSTONE &&
+						event.getBlock().getType() != Material.ENDER_STONE &&
+						event.getBlock().getType() != Material.GLASS &&
+						event.getBlock().getType() != Material.LADDER &&
+						event.getBlock().getType() != Material.CHEST &&
+						event.getBlock().getType() != Material.WOOL) {
 					event.setCancelled(true);
 				}
 			}
